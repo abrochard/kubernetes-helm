@@ -41,8 +41,7 @@ BUFFER-NAME is the name of the temp buffer.  Default to *kubel-command*"
       (setq buffer-name "*kubernetes-helm-command*"))
   (with-output-to-temp-buffer buffer-name
     (shell-command command
-                   buffer-name
-                   "*Messages*")
+                   buffer-name)
     (pop-to-buffer buffer-name)))
 
 (defun kubernetes-helm-dep-up (directory)
