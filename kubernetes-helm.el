@@ -28,6 +28,27 @@
 
 ;;; Commentary:
 
+;; Emacs utility functions and bindings for [helm](https://helm.sh/), the kubernetes package manager.
+
+;;; Usage:
+
+;; Invoke the interactive functions
+;;
+;; M-x kubernetes-helm-dep-up
+;; M-x kubernetes-helm-install
+;; M-x kubernetes-helm-upgrade
+;; M-x kubernetes-helm-values
+;; M-x kubernetes-helm-status
+;;
+;; To respectively
+;; - update the dependencies
+;; - install a chart
+;; - upgrade a chart
+;; - get the values of a deployed chart
+;; - get the status of a deployment
+;;
+;; Note that in most cases, you will be prompted for the k8s namespace.
+
 ;;; Code:
 
 (require 'yaml-mode)
@@ -44,6 +65,7 @@ BUFFER-NAME is the name of the temp buffer.  Default to *kubel-command*"
                    buffer-name)
     (pop-to-buffer buffer-name)))
 
+;;;###autoload
 (defun kubernetes-helm-dep-up (directory)
   "Run helm dep up on a directory.
 
