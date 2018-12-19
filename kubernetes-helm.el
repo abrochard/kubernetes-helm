@@ -1,4 +1,4 @@
-;;; kubernetes-helm.el --- extension for controlling helm, the package manager for kubernetes
+;;; kubernetes-helm.el --- extension for helm, the package manager for kubernetes -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2018, Adrien Brochard
 
@@ -21,10 +21,10 @@
 
 ;; Version: 1.0
 ;; Author: Adrien Brochard
-;; Keywords: kubernetes helm k8s
+;; Keywords: kubernetes helm k8s tools processes
 ;; URL: https://github.com/abrochard/kubernetes-helm
 ;; License: GNU General Public License >= 3
-;; Package-Requires: ((yaml-mode "") (emacs "26.1"))
+;; Package-Requires: ((yaml-mode "0.0.13") (emacs "26.1"))
 
 ;;; Commentary:
 
