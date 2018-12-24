@@ -58,7 +58,7 @@
 
 COMMAND is the command string.
 BUFFER-NAME is the name of the temp buffer.  Default to *kubel-command*"
-  (if (not buffer-name)
+  (unless buffer-name
       (setq buffer-name "*kubernetes-helm-command*"))
   (with-output-to-temp-buffer buffer-name
     (shell-command command
@@ -81,7 +81,7 @@ DIRECTORY is the chart location.
 VALUES-FILE is the override values."
   (interactive "MNamespace: \nDChart: \nfValues file: ")
   (kubernetes-helm--run-command
-   (concat "helm install " directory (if (y-or-n-p "Dry run? ") " --dry-run --debug") " -f " values-file " --name " namespace " &")))
+   (concat "helm install " directory (when (y-or-n-p "Dry run? ") " --dry-run --debug") " -f " values-file " --name " namespace " &")))
 
 (defun kubernetes-helm-upgrade (namespace directory values-file)
   "Run helm upgrade.
@@ -91,7 +91,7 @@ DIRECTORY si the chart location.
 VALUES-FILE is teh override values."
   (interactive "MNamespace: \nDChart: \nfValues file: ")
   (kubernetes-helm--run-command
-   (concat "helm upgrade " namespace " " directory (if (y-or-n-p "Dry run? ") " --dry-run --debug") " -f " values-file " &")))
+   (concat "helm upgrade " namespace " " directory (when (y-or-n-p "Dry run? ") " --dry-run --debug") " -f " values-file " &")))
 
 (defun kubernetes-helm-values (namespace)
   "Get helm values for a namespace.
