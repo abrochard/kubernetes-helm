@@ -88,7 +88,7 @@ VALUES-FILE is the override values."
 
 NAMESPACE is the namespace.
 DIRECTORY si the chart location.
-VALUES-FILE is teh override values."
+VALUES-FILE is the override values."
   (interactive "MNamespace: \nDChart: \nfValues file: ")
   (kubernetes-helm--run-command
    (concat "helm upgrade " namespace " " directory (when (y-or-n-p "Dry run? ") " --dry-run --debug") " -f " values-file " &")))
