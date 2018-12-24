@@ -28,7 +28,7 @@
 
 ;;; Commentary:
 
-;; Emacs utility functions and bindings for [helm](https://helm.sh/), the kubernetes package manager.
+;; Commands for [helm](https://helm.sh/), the kubernetes package manager.
 
 ;;; Usage:
 
