@@ -53,17 +53,8 @@
 
 (require 'yaml-mode)
 
-(defun kubernetes-helm--run-command (command &optional buffer-name)
-  "Utility function to run a command in a temp buffer.
-
-COMMAND is the command string.
-BUFFER-NAME is the name of the temp buffer.  Default to *kubel-command*"
-  (unless buffer-name
-      (setq buffer-name "*kubernetes-helm-command*"))
-  (with-output-to-temp-buffer buffer-name
-    (shell-command command
-                   buffer-name)
-    (pop-to-buffer buffer-name)))
+(defconst kubernetes-helm-process-name "kubernetes-helm")
+(defconst kubernetes-helm-buffer-name "*kubernetes-helm-command*")
 
 ;;;###autoload
 (defun kubernetes-helm-dep-up (directory)
@@ -71,7 +62,12 @@ BUFFER-NAME is the name of the temp buffer.  Default to *kubel-command*"
 
 DIRECTORY is the chart location."
   (interactive "DChart: ")
-  (kubernetes-helm--run-command (concat "helm dep up " directory " &")))
+  (with-output-to-temp-buffer kubernetes-helm-buffer-name
+    (start-process kubernetes-helm-process-name kubernetes-helm-buffer-name
+                   "helm" "dep" "up" directory)
+    (pop-to-buffer kubernetes-helm-buffer-name))
+  ;; (kubernetes-helm--run-command (concat "helm dep up " directory " &"))
+  )
 
 (defun kubernetes-helm-install (namespace directory values-file)
   "Run helm install.
@@ -80,8 +76,13 @@ NAMESPACE is the namespace.
 DIRECTORY is the chart location.
 VALUES-FILE is the override values."
   (interactive "MNamespace: \nDChart: \nfValues file: ")
-  (kubernetes-helm--run-command
-   (concat "helm install " directory (when (y-or-n-p "Dry run? ") " --dry-run --debug") " -f " values-file " --name " namespace " &")))
+  (with-output-to-temp-buffer kubernetes-helm-buffer-name
+    (start-process kubernetes-helm-process-name kubernetes-helm-buffer-name
+                   "helm" "install" directory "-f" values-file "--name" namespace "--debug" (when (y-or-n-p "Dry run? ") "--dry-run"))
+    (pop-to-buffer kubernetes-helm-buffer-name))
+  ;; (kubernetes-helm--run-command
+  ;;  (concat "helm install " directory (when (y-or-n-p "Dry run? ") " --dry-run --debug") " -f " values-file " --name " namespace " &"))
+  )
 
 (defun kubernetes-helm-upgrade (namespace directory values-file)
   "Run helm upgrade.
@@ -90,8 +91,13 @@ NAMESPACE is the namespace.
 DIRECTORY si the chart location.
 VALUES-FILE is the override values."
   (interactive "MNamespace: \nDChart: \nfValues file: ")
-  (kubernetes-helm--run-command
-   (concat "helm upgrade " namespace " " directory (when (y-or-n-p "Dry run? ") " --dry-run --debug") " -f " values-file " &")))
+  (with-output-to-temp-buffer kubernetes-helm-buffer-name
+    (start-process kubernetes-helm-process-name kubernetes-helm-buffer-name
+                   "helm" "upgrade" namespace directory "-f" values-file "--debug" (when (y-or-n-p "Dry run? ") "--dry-run"))
+    (pop-to-buffer kubernetes-helm-buffer-name))
+  ;; (kubernetes-helm--run-command
+  ;;  (concat "helm upgrade " namespace " " directory (when (y-or-n-p "Dry run? ") " --dry-run --debug") " -f " values-file " &")
+   )
 
 (defun kubernetes-helm-values (namespace)
   "Get helm values for a namespace.
@@ -99,7 +105,8 @@ VALUES-FILE is the override values."
 NAMESPACE is the namespace."
   (interactive "MNamespace: ")
   (let ((buffer-name (concat "*kubernetes - helm - " namespace "*")))
-    (shell-command (concat "helm get values " namespace) buffer-name)
+    (when (get-buffer buffer-name) (kill-buffer buffer-name))
+    (call-process "helm" nil buffer-name nil "get" "values" namespace)
     (pop-to-buffer buffer-name)
     (yaml-mode)))
 
@@ -108,7 +115,9 @@ NAMESPACE is the namespace."
 
 NAMESPACE is the namespace."
   (interactive "MNamespace: ")
-  (kubernetes-helm--run-command (concat "helm status " namespace)))
+  (with-output-to-temp-buffer kubernetes-helm-buffer-name
+    (call-process "helm" nil kubernetes-helm-buffer-name nil "status" namespace)
+    (pop-to-buffer kubernetes-helm-buffer-name)))
 
 (provide 'kubernetes-helm)
 ;;; kubernetes-helm.el ends here
