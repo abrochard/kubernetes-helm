@@ -65,9 +65,7 @@ DIRECTORY is the chart location."
   (with-output-to-temp-buffer kubernetes-helm-buffer-name
     (start-process kubernetes-helm-process-name kubernetes-helm-buffer-name
                    "helm" "dep" "up" directory)
-    (pop-to-buffer kubernetes-helm-buffer-name))
-  ;; (kubernetes-helm--run-command (concat "helm dep up " directory " &"))
-  )
+    (pop-to-buffer kubernetes-helm-buffer-name)))
 
 (defun kubernetes-helm-install (namespace directory values-file)
   "Run helm install.
@@ -79,10 +77,7 @@ VALUES-FILE is the override values."
   (with-output-to-temp-buffer kubernetes-helm-buffer-name
     (start-process kubernetes-helm-process-name kubernetes-helm-buffer-name
                    "helm" "install" directory "-f" values-file "--name" namespace "--debug" (when (y-or-n-p "Dry run? ") "--dry-run"))
-    (pop-to-buffer kubernetes-helm-buffer-name))
-  ;; (kubernetes-helm--run-command
-  ;;  (concat "helm install " directory (when (y-or-n-p "Dry run? ") " --dry-run --debug") " -f " values-file " --name " namespace " &"))
-  )
+    (pop-to-buffer kubernetes-helm-buffer-name)))
 
 (defun kubernetes-helm-upgrade (namespace directory values-file)
   "Run helm upgrade.
