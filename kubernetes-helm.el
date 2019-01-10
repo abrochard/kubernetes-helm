@@ -39,6 +39,7 @@
 ;; M-x kubernetes-helm-upgrade
 ;; M-x kubernetes-helm-values
 ;; M-x kubernetes-helm-status
+;; M-x kubernetes-helm-template
 ;;
 ;; To respectively
 ;; - update the dependencies
@@ -46,6 +47,7 @@
 ;; - upgrade a chart
 ;; - get the values of a deployed chart
 ;; - get the status of a deployment
+;; - render chart template locally
 ;;
 ;; Note that in most cases, you will be prompted for the k8s namespace.
 
@@ -110,6 +112,16 @@ NAMESPACE is the namespace."
   (with-output-to-temp-buffer kubernetes-helm-buffer-name
     (call-process "helm" nil kubernetes-helm-buffer-name nil "status" namespace)
     (pop-to-buffer kubernetes-helm-buffer-name)))
+
+(defun kubernetes-helm-template (directory)
+  "Render chat template locally.
+
+DIRECTORY is the location of the chart."
+  (interactive "DChart: ")
+  (let ((buffer-name (format "*kubernetes - helm - template - %s *" (file-name-base (directory-file-name directory)))))
+    (with-output-to-temp-buffer buffer-name
+      (call-process "helm" nil buffer-name nil "template" directory)
+      (pop-to-buffer buffer-name))))
 
 (provide 'kubernetes-helm)
 ;;; kubernetes-helm.el ends here

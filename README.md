@@ -15,6 +15,7 @@ M-x kubernetes-helm-install
 M-x kubernetes-helm-upgrade
 M-x kubernetes-helm-values
 M-x kubernetes-helm-status
+M-x kubernetes-helm-template
 ```
 
 To respectively
@@ -23,5 +24,6 @@ To respectively
 - upgrade a chart
 - get the values of a deployed chart
 - get the status of a deployment
+- render chart template locally
 
 Note that in most cases, you will be prompted for the k8s namespace.
