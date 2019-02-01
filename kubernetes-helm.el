@@ -24,7 +24,7 @@
 ;; Keywords: kubernetes helm k8s tools processes
 ;; URL: https://github.com/abrochard/kubernetes-helm
 ;; License: GNU General Public License >= 3
-;; Package-Requires: ((yaml-mode "0.0.13") (emacs "26.1"))
+;; Package-Requires: ((yaml-mode "0.0.13") (emacs "25.3"))
 
 ;;; Commentary:
 
