@@ -1,4 +1,4 @@
-[![MELPA](https://melpa.org/packages/kubel-badge.svg)](https://melpa.org/#/kubel)
+[![MELPA](https://melpa.org/packages/kubernetes-helm-badge.svg)](https://melpa.org/#/kubernetes-helm)
 
 # kubernetes-helm
 Emacs utility functions and bindings for [helm](https://helm.sh/), the kubernetes package manager.
