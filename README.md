@@ -1,3 +1,5 @@
+[![MELPA](https://melpa.org/packages/kubel-badge.svg)](https://melpa.org/#/kubel)
+
 # kubernetes-helm
 Emacs utility functions and bindings for [helm](https://helm.sh/), the kubernetes package manager.
 
