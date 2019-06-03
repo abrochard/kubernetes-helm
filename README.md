@@ -5,7 +5,7 @@ Emacs utility functions and bindings for [helm](https://helm.sh/), the kubernete
 
 ## Installation
 
-For now copy and load the `kubernetes-helm.el` file.
+Get it from Melpa or copy and load the `kubernetes-helm.el` file.
 
 ## Usage:
 
