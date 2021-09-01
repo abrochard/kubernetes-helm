@@ -69,6 +69,7 @@ DIRECTORY is the chart location."
                    "helm" "dep" "up" directory)
     (pop-to-buffer kubernetes-helm-buffer-name)))
 
+;;;###autoload
 (defun kubernetes-helm-install (namespace directory values-file)
   "Run helm install.
 
@@ -81,6 +82,7 @@ VALUES-FILE is the override values."
            "helm" (remove nil (list "install" directory "-f" values-file "--name" namespace "--debug" (when (y-or-n-p "Dry run? ") "--dry-run"))))
     (pop-to-buffer kubernetes-helm-buffer-name)))
 
+;;;###autoload
 (defun kubernetes-helm-upgrade (namespace directory values-file)
   "Run helm upgrade.
 
@@ -93,6 +95,7 @@ VALUES-FILE is the override values."
            "helm" (remove nil (list "upgrade" namespace directory "-f" values-file "--debug" (when (y-or-n-p "Dry run? ") "--dry-run"))))
     (pop-to-buffer kubernetes-helm-buffer-name)))
 
+;;;###autoload
 (defun kubernetes-helm-values (namespace)
   "Get helm values for a namespace.
 
@@ -113,6 +116,7 @@ NAMESPACE is the namespace."
     (call-process "helm" nil kubernetes-helm-buffer-name nil "status" namespace)
     (pop-to-buffer kubernetes-helm-buffer-name)))
 
+;;;###autoload
 (defun kubernetes-helm-template (directory)
   "Render chat template locally.
 
@@ -121,7 +125,8 @@ DIRECTORY is the location of the chart."
   (let ((buffer-name (format "*kubernetes - helm - template - %s *" (file-name-base (directory-file-name directory)))))
     (with-output-to-temp-buffer buffer-name
       (call-process "helm" nil buffer-name nil "template" directory)
-      (pop-to-buffer buffer-name))))
+      (pop-to-buffer buffer-name)
+      (yaml-mode))))
 
 (provide 'kubernetes-helm)
 ;;; kubernetes-helm.el ends here
