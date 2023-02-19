@@ -118,7 +118,7 @@ NAMESPACE is the namespace."
 
 ;;;###autoload
 (defun kubernetes-helm-template (directory)
-  "Render chat template locally.
+  "Render chart template locally.
 
 DIRECTORY is the location of the chart."
   (interactive "DChart: ")
